@@ -1,0 +1,970 @@
+<!doctype html> <html lang="en"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>Language Selection - NINJIO Survey</title> <style type="text/css"> :root{ --bg:#251325; --text:#FFFFFF; --accent:#FF4438; --card:#311a2d; --muted:#e6ddea; --muted-2:#bfaec8; --focus-ring: 0 0 0 3px rgba(255,68,56,0.45); } html,body{height:100%} body{ margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; } .topbar{display:flex; align-items:center; gap:.75rem; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,.08)} .logo{height:28px; width:auto} /* Container */ .container{max-width:900px; width:100%; margin:0 auto; padding:24px} .section{ background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--card); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:20px; box-shadow: 0 10px 30px rgba(0,0,0,.25); margin-bottom:2rem; } h1{margin:.2rem 0 1rem; font-size:1.8rem; line-height:1.2; text-align:center; min-height:2.2rem;} .section h1{text-align:left; font-size:1.5rem; font-weight:400;} #main-heading{text-align:center !important; font-size:1.8rem !important;} .sub{color:var(--muted); margin:0 0 2rem; font-size:1rem; text-align:center; min-height:1.2rem;} .section .sub{text-align:left;} #sub-heading{text-align:center !important;} /* Language List */ .lang-list{ max-height:400px; overflow-y:auto; border:1px solid rgba(255,255,255,.12); border-radius:12px; background:rgba(0,0,0,.2); } .lang-option{ padding:12px 16px; border-bottom:1px solid rgba(255,255,255,.06); cursor:pointer; transition:all .2s ease; } .lang-option:last-child{border-bottom:none} .lang-option:hover{background:rgba(255,68,56,.1)} .lang-option.selected{background:var(--accent); color:#1a0b0a} .lang-option.selected:hover{background:#ff5a4e; color:#1a0b0a} .lang-name{font-weight:600} .lang-native{font-size:.9rem; color:var(--muted-2); font-style:italic} .lang-option.selected .lang-native{color:#3d1a17} /* Search */ .search-box{ margin-bottom:1rem; position:relative; } .search-input{ width:100%; padding:12px 16px; border:1px solid rgba(255,255,255,.18); border-radius:8px; background:rgba(0,0,0,.3); color:var(--text); font-size:1rem; box-sizing:border-box; } .search-input::placeholder{color:var(--muted-2)} .search-input:focus{outline:none; box-shadow: var(--focus-ring); border-color:var(--accent)} /* Actions */ .actions{display:flex; justify-content:center; margin-top:2rem} .submit{ background:var(--accent); color:#1a0b0a; border:none; padding:16px 32px; border-radius:12px; font-weight:800; font-size:1.1rem; cursor:pointer; transition:all .2s ease; } .submit[disabled]{opacity:.5; cursor:not-allowed} .submit:hover:not([disabled]){background:#ff5a4e} .hidden{display:none} /* Progress */ .progress{height:10px; width:100%; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; margin:10px 0 18px} .progress > .bar{height:100%; width:0%; background:var(--accent); transition:width .25s ease;} .progress-caption{display:flex; justify-content:space-between; font-size:.8rem; color:var(--muted-2); margin-top:4px} /* Question block */ .q{padding:14px 12px; border:1px solid rgba(255,255,255,.08); border-radius:12px; margin:12px 0; background: rgba(255,255,255,.02)} .q h3{margin:0 0 .35rem; font-size:1.05rem} .q p{margin:.25rem 0 .75rem; color:var(--muted)} .btnrow{display:flex; flex-wrap:wrap; gap:8px} .option-btn{ appearance:none; border:1px solid rgba(255,255,255,.18); background:#40203a; color:var(--text); padding:10px 12px; border-radius:999px; font-weight:600; cursor:pointer; transition:transform .02s ease, border-color .2s ease, background .2s ease; } .option-btn:hover{border-color:var(--accent)} .option-btn:focus{outline:none; box-shadow: var(--focus-ring)} .option-btn[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#1a0b0a} .option-btn[disabled]{opacity:.6; cursor:not-allowed} /* Form elements */ .role-select, .domain-input{ appearance:none; border:1px solid rgba(255,255,255,.18); background:#40203a; color:var(--text); padding:12px 16px; border-radius:8px; font-size:.95rem; width:100%; box-sizing:border-box; cursor:pointer; transition:border-color .2s ease, background .2s ease; } .role-select:focus, .domain-input:focus{outline:none; box-shadow: var(--focus-ring); border-color:var(--accent)} .role-select option{background:#40203a; color:var(--text)} .domain-input::placeholder{color:var(--muted-2)} .form-group{margin-bottom:1.5rem} .form-group h3{margin:0 0 .35rem; font-size:1.05rem} .form-group p{margin:.25rem 0 .75rem; color:var(--muted)} .domain-grid{display:grid; gap:8px; grid-template-columns:repeat(5, 1fr)} </style> </head> <body> <header class="topbar" role="banner"> <img alt="NINJIO" class="logo" src="https://ninjio-prod-logos.s3.us-west-2.amazonaws.com/public/template/ninjio.com/media.brand.dev/871d8edd-e713-47ae-ab8c-f5df8c033c42.png" /> </header> <div class="container"> <!-- Language Selection Section --> <div class="section" id="language-section"> <h1 id="main-heading">Select Your Language</h1> <p class="sub" id="sub-heading">Choose your preferred language to continue with the survey</p> <div class="search-box"> <input type="text" class="search-input" placeholder="Search languages..." id="language-search" /> </div> <div class="lang-list" id="language-list"> <div class="lang-option" data-lang="English"> <div class="lang-name">English</div> <div class="lang-native">English</div> </div> <div class="lang-option" data-lang="French Canadian"> <div class="lang-name">French Canadian</div> <div class="lang-native">Français canadien</div> </div> <div class="lang-option" data-lang="French Parisian"> <div class="lang-name">French Parisian</div> <div class="lang-native">Français parisien</div> </div> <div class="lang-option" data-lang="Latin American Spanish"> <div class="lang-name">Latin American Spanish</div> <div class="lang-native">Español latinoamericano</div> </div> <div class="lang-option" data-lang="Brazilian Portuguese"> <div class="lang-name">Brazilian Portuguese</div> <div class="lang-native">Português brasileiro</div> </div> <div class="lang-option" data-lang="German"> <div class="lang-name">German</div> <div class="lang-native">Deutsch</div> </div> <div class="lang-option" data-lang="Simplified Chinese"> <div class="lang-name">Simplified Chinese</div> <div class="lang-native">简体中文</div> </div> <div class="lang-option" data-lang="Hebrew"> <div class="lang-name">Hebrew</div> <div class="lang-native">עברית</div> </div> <div class="lang-option" data-lang="Arabic"> <div class="lang-name">Arabic</div> <div class="lang-native">العربية</div> </div> <div class="lang-option" data-lang="Czech"> <div class="lang-name">Czech</div> <div class="lang-native">Čeština</div> </div> <div class="lang-option" data-lang="Dutch"> <div class="lang-name">Dutch</div> <div class="lang-native">Nederlands</div> </div> <div class="lang-option" data-lang="Estonian"> <div class="lang-name">Estonian</div> <div class="lang-native">Eesti</div> </div> <div class="lang-option" data-lang="Finnish"> <div class="lang-name">Finnish</div> <div class="lang-native">Suomi</div> </div> <div class="lang-option" data-lang="Hindi"> <div class="lang-name">Hindi</div> <div class="lang-native">हिन्दी</div> </div> <div class="lang-option" data-lang="Italian"> <div class="lang-name">Italian</div> <div class="lang-native">Italiano</div> </div> <div class="lang-option" data-lang="Japanese"> <div class="lang-name">Japanese</div> <div class="lang-native">日本語</div> </div> <div class="lang-option" data-lang="Korean"> <div class="lang-name">Korean</div> <div class="lang-native">한국어</div> </div> <div class="lang-option" data-lang="Malay"> <div class="lang-name">Malay</div> <div class="lang-native">Bahasa Melayu</div> </div> <div class="lang-option" data-lang="Norwegian"> <div class="lang-name">Norwegian</div> <div class="lang-native">Norsk</div> </div> <div class="lang-option" data-lang="Polish"> <div class="lang-name">Polish</div> <div class="lang-native">Polski</div> </div> <div class="lang-option" data-lang="Portugal Portuguese"> <div class="lang-name">Portugal Portuguese</div> <div class="lang-native">Português europeu</div> </div> <div class="lang-option" data-lang="Romanian"> <div class="lang-name">Romanian</div> <div class="lang-native">Română</div> </div> <div class="lang-option" data-lang="Russian"> <div class="lang-name">Russian</div> <div class="lang-native">Русский</div> </div> <div class="lang-option" data-lang="Traditional Chinese"> <div class="lang-name">Traditional Chinese</div> <div class="lang-native">繁體中文</div> </div> <div class="lang-option" data-lang="Swedish"> <div class="lang-name">Swedish</div> <div class="lang-native">Svenska</div> </div> <div class="lang-option" data-lang="Thai"> <div class="lang-name">Thai</div> <div class="lang-native">ไทย</div> </div> <div class="lang-option" data-lang="Turkish"> <div class="lang-name">Turkish</div> <div class="lang-native">Türkçe</div> </div> <div class="lang-option" data-lang="Ukrainian"> <div class="lang-name">Ukrainian</div> <div class="lang-native">Українська</div> </div> <div class="lang-option" data-lang="Vietnamese"> <div class="lang-name">Vietnamese</div> <div class="lang-native">Tiếng Việt</div> </div> <div class="lang-option" data-lang="Hungarian"> <div class="lang-name">Hungarian</div> <div class="lang-native">Magyar</div> </div> <div class="lang-option" data-lang="Slovak"> <div class="lang-name">Slovak</div> <div class="lang-native">Slovenčina</div> </div> </div> <div class="actions"> <button type="button" class="submit" id="continue-btn" disabled>Continue to Survey</button> </div> </div> <!-- Basic Information Section (OUTSIDE form) --> <div class="section hidden" id="basic-info-section"> <h1>Basic Information</h1> <div class="form-group"> <h3>Your Role</h3> <p>What role best describes your primary work function?</p> <select id="role-select" name="SB_Role" class="role-select" required> <option value="">Select your role...</option> <option value="Executive" title="Choose this if you primarily lead the organization or set direction.">Executive</option> <option value="Strategy" title="Choose this if you primarily plan long-term priorities and bets.">Strategy</option> <option value="Product" title="Choose this if you primarily decide what to build and why.">Product</option> <option value="Engineering" title="Choose this if you primarily build or run products or systems.">Engineering</option> <option value="Design" title="Choose this if you primarily design user experiences or visuals.">Design</option> <option value="Data and Analytics" title="Choose this if you primarily work with data and insights.">Data and Analytics</option> <option value="Program Office" title="Choose this if you primarily coordinate cross-team work and timelines.">Program Office</option> <option value="Operations" title="Choose this if you primarily run day-to-day processes and delivery.">Operations</option> <option value="Procurement" title="Choose this if you primarily buy things or manage suppliers.">Procurement</option> <option value="Quality Assurance" title="Choose this if you primarily ensure outputs meet agreed standards.">Quality Assurance</option> <option value="Information Technology" title="Choose this if you primarily support company technology and tools.">Information Technology</option> <option value="Security" title="Choose this if you primarily keep people, data, and systems secure.">Security</option> <option value="Enterprise Risk" title="Choose this if you primarily oversee non-tech risk and compliance.">Enterprise Risk</option> <option value="Finance and Accounting" title="Choose this if you primarily manage budgets, spending, or reporting.">Finance and Accounting</option> <option value="Human Resources" title="Choose this if you primarily hire, support, or develop employees.">Human Resources</option> <option value="Legal and Compliance" title="Choose this if you primarily handle legal matters and policies.">Legal and Compliance</option> <option value="Sales" title="Choose this if you primarily turn prospects into revenue.">Sales</option> <option value="Marketing" title="Choose this if you primarily create awareness and demand.">Marketing</option> <option value="Customer Success and Support" title="Choose this if you primarily help customers after purchase.">Customer Success and Support</option> <option value="Partnerships" title="Choose this if you primarily manage external partners and channels.">Partnerships</option> <option value="Facilities" title="Choose this if you primarily manage workplaces, space, and services.">Facilities</option> </select> </div> <div class="form-group"> <h3>Website Usage</h3> <p>What are your 5 most commonly viewed websites? Enter domain names only (e.g., google.com, microsoft.com)</p> <div class="domain-grid"> <input type="text" id="domain_1_input" name="SB_Site_1" placeholder="e.g., google.com" class="domain-input" autocomplete="off" /> <input type="text" id="domain_2_input" name="SB_Site_2" placeholder="e.g., microsoft.com" class="domain-input" autocomplete="off" /> <input type="text" id="domain_3_input" name="SB_Site_3" placeholder="e.g., linkedin.com" class="domain-input" autocomplete="off" /> <input type="text" id="domain_4_input" name="SB_Site_4" placeholder="e.g., zoom.us" class="domain-input" autocomplete="off" /> <input type="text" id="domain_5_input" name="SB_Site_5" placeholder="e.g., slack.com" class="domain-input" autocomplete="off" /> </div> <div id="domain-error" style="color: var(--accent); font-size: 0.9rem; margin-top: 8px; display: none;"></div> </div> </div> <!-- Form containing ONLY personality assessment (like working version) --> <form id="password-form" method="post" novalidate class="hidden"> <div class="section"> <h1>A Day in Your Digital Life — Personality Assessment</h1> <p class="sub">Read each scenario and choose the option that feels most natural to you. Your selections are recorded invisibly. Complete all questions to submit.</p> <div aria-label="Progress" class="progress"> <div class="bar" id="progress-bar"></div> </div> <div class="progress-caption"> <span id="progress-count">0/10 answered</span> <span>Warm Red indicates progress</span> </div> <div id="questions"></div> <!-- Hidden fields --> <input type="hidden" name="SB_Languages" id="SB_Languages" value="" /> <input type="hidden" name="SR_0" id="SR_0" value="" /> <input type="hidden" name="SR_1" id="SR_1" value="" /> <input type="hidden" name="SR_2" id="SR_2" value="" /> <input type="hidden" name="SR_3" id="SR_3" value="" /> <input type="hidden" name="SR_4" id="SR_4" value="" /> <input type="hidden" name="SR_5" id="SR_5" value="" /> <input type="hidden" name="SR_6" id="SR_6" value="" /> <input type="hidden" name="SR_7" id="SR_7" value="" /> <input type="hidden" name="SR_8" id="SR_8" value="" /> <input type="hidden" name="SR_9" id="SR_9" value="" /> <input type="hidden" name="ST_Seconds" id="ST_Seconds" value="0" /> <input type="hidden" name="STime" id="STime" value="" /> <div class="actions"> <button class="submit" disabled id="submit-btn" type="submit">Submit</button> </div> </div> </form> </div> <script> // Simple counter timer - updates field every second with plain text let secondsCounter = 0; // Wait for page to load, then start timer document.addEventListener('DOMContentLoaded', function() { const timerField = document.getElementById('ST_Seconds'); const timerInterval = setInterval(() => { secondsCounter++; timerField.value = secondsCounter.toString(); console.log('Timer updated:', secondsCounter); // Debug log }, 1000); // Translations for cycling headers const translations = [ { heading: "Select Your Language", subtitle: "Choose your preferred language to continue with the survey" }, { heading: "Sélectionnez votre langue", subtitle: "Choisissez votre langue préférée pour continuer l'enquête" }, { heading: "Sélectionnez votre langue", subtitle: "Choisissez votre langue préférée pour continuer l'enquête" }, { heading: "Seleccione su idioma", subtitle: "Elija su idioma preferido para continuar con la encuesta" }, { heading: "Selecione seu idioma", subtitle: "Escolha seu idioma preferido para continuar com a pesquisa" }, { heading: "Wählen Sie Ihre Sprache", subtitle: "Wählen Sie Ihre bevorzugte Sprache, um mit der Umfrage fortzufahren" }, { heading: "选择您的语言", subtitle: "选择您的首选语言以继续调查" }, { heading: "בחר את השפה שלך", subtitle: "בחר את השפה המועדפת עליך כדי להמשיך עם הסקר" }, { heading: "اختر لغتك", subtitle: "اختر لغتك المفضلة للمتابعة مع الاستطلاع" }, { heading: "Vyberte svůj jazyk", subtitle: "Vyberte svůj preferovaný jazyk pro pokračování v průzkumu" }, { heading: "Selecteer uw taal", subtitle: "Kies uw voorkeurstaal om door te gaan met de enquête" }, { heading: "Valige oma keel", subtitle: "Valige eelistatud keel, et küsitlusega jätkata" }, { heading: "Valitse kielesi", subtitle: "Valitse haluamasi kieli jatkaaksesi kyselyä" }, { heading: "अपनी भाषा चुनें", subtitle: "सर्वेक्षण जारी रखने के लिए अपनी पसंदीदा भाषा चुनें" }, { heading: "Seleziona la tua lingua", subtitle: "Scegli la tua lingua preferita per continuare con il sondaggio" }, { heading: "言語を選択してください", subtitle: "調査を続けるために、お好みの言語を選択してください" }, { heading: "언어를 선택하세요", subtitle: "설문조사를 계속하려면 선호하는 언어를 선택하세요" }, { heading: "Pilih Bahasa Anda", subtitle: "Pilih bahasa pilihan anda untuk meneruskan tinjauan" }, { heading: "Velg ditt språk", subtitle: "Velg ditt foretrukne språk for å fortsette med undersøkelsen" }, { heading: "Wybierz swój język", subtitle: "Wybierz preferowany język, aby kontynuować ankietę" }, { heading: "Selecione o seu idioma", subtitle: "Escolha o seu idioma preferido para continuar com o inquérito" }, { heading: "Selectați limba", subtitle: "Alegeți limba preferată pentru a continua cu sondajul" }, { heading: "Выберите ваш язык", subtitle: "Выберите предпочтительный язык для продолжения опроса" }, { heading: "選擇您的語言", subtitle: "選擇您的首選語言以繼續調查" }, { heading: "Välj ditt språk", subtitle: "Välj ditt föredragna språk för att fortsätta med undersökningen" }, { heading: "เลือกภาษาของคุณ", subtitle: "เลือกภาษาที่ต้องการเพื่อดำเนินการสำรวจต่อ" }, { heading: "Dilinizi seçin", subtitle: "Anketle devam etmek için tercih ettiğiniz dili seçin" }, { heading: "Оберіть свою мову", subtitle: "Виберіть бажану мову для продовження опитування" }, { heading: "Chọn ngôn ngữ của bạn", subtitle: "Chọn ngôn ngữ ưa thích của bạn để tiếp tục cuộc khảo sát" }, { heading: "Válassza ki a nyelvét", subtitle: "Válassza ki a kívánt nyelvet a felmérés folytatásához" }, { heading: "Vyberte váš jazyk", subtitle: "Vyberte váš preferovaný jazyk na pokračovanie v prieskume" } ]; let currentIndex = 0; // Cycle through translations const headingElement = document.getElementById('main-heading'); const subtitleElement = document.getElementById('sub-heading'); function cycleTranslations() { headingElement.textContent = translations[currentIndex].heading; subtitleElement.textContent = translations[currentIndex].subtitle; currentIndex = (currentIndex + 1) % translations.length; } // Start auto-cycling and keep the interval id so we can cancel it on user selection let translationInterval = setInterval(cycleTranslations, 5000); // Defensive getters for frequently accessed elements (do NOT cache live node lists globally) function getContinueBtn() { return document.getElementById('continue-btn'); } function getSearchInput() { return document.getElementById('language-search'); } function getLanguageField() { return document.getElementById('SB_Languages'); } // NOTE: use getLanguageOptions()/findLanguageIndex() when you need the language list or its index mapping
+
+// Language selection functionality
+// NOTE: Do not cache live NodeLists or fields here; use the defensive getters (getLanguageOptions/getLanguageField/etc.)
+
+// -- BEGIN: translations mapping (safe, visible-text only) --
+const languages = {
+  "Arabic": {
+    heading: "اختر اللغة",
+    subtitle: "اختر لغتك المفضلة للمتابعة مع الاستطلاع",
+    langCode: "ar",
+    dir: "rtl",
+    searchPlaceholder: "البحث عن اللغات...",
+    continueText: "المتابعة إلى الاستطلاع",
+    basicInfoHeading: "المعلومات الأساسية",
+    roleHeading: "دورك",
+    rolePrompt: "أي دور يصف بشكل أفضل وظيفة عملك الأساسية؟",
+    roleOptions: [
+      "اختر دورك المطلوب...","تنفيذي","الاستراتيجية","منتج","الهندسة","التصميم","البيانات والتحليلات","مكتب البرامج","العمليات","المشتريات","ضمان الجودة","تكنولوجيا المعلومات","الأمان","مخاطر المؤسسة","المالية والمحاسبة","الموارد البشرية","القانون والامتثال","المبيعات","التسويق","نجاح العملاء والدعم","الشراكات","المرافق"
+    ],
+    domainPrompt: "ما هي مواقعك الخمسة الأكثر زيارة؟ أدخل أسماء النطاقات فقط (مثل: google.com، microsoft.com)",
+    domainPlaceholders: ["مثلاً، google.com","مثلاً، microsoft.com","مثلاً، linkedin.com","مثلاً، zoom.us","مثلاً، slack.com"],
+    assessmentHeading: "يوم في حياتك الرقمية — تقييم الشخصية",
+    assessmentSub: "اقرأ كل سيناريو واختر الخيار الذي يبدو أكثر طبيعية لك. يتم تسجيل اختياراتك بصورة غير مرئية. أكمل جميع الأسئلة للإرسال.",
+    progressCaptionLeft: "تمت الإجابة",
+    progressCaptionRight: "اللون الأحمر الدافئ يشير إلى التقدم",
+    questions: []
+  },
+
+  "Brazilian Portuguese": {
+    heading: "Selecione o seu idioma",
+    subtitle: "Escolha o idioma de sua preferência para continuar com a pesquisa",
+    langCode: "pt-BR",
+    dir: "ltr",
+    searchPlaceholder: "Search languages...",
+    continueText: "Continuar para a Pesquisa",
+    basicInfoHeading: "Informações Básicas",
+    roleHeading: "Sua Função",
+    rolePrompt: "Qual função descreve melhor sua principal função no trabalho?",
+    roleOptions: [
+      "Selecione sua função...","Executivo","Estratégia","Produto","Engenharia","Design","Dados e Análise","Escritório de Programas","Operações","Compras","Garantia de Qualidade","Tecnologia da Informação","Segurança","Risco Empresarial","Finanças e Contabilidade","Recursos Humanos","Jurídico e Conformidade","Vendas","Marketing","Sucesso do Cliente e Suporte","Parcerias","Instalações"
+    ],
+    domainPrompt: "Quais são os seus 5 sites mais acessados? Digite apenas os nomes de domínio (por exemplo, google.com, microsoft.com)",
+    domainPlaceholders: ["e.g., google.com","e.g., microsoft.com","e.g., linkedin.com","e.g., zoom.us","e.g., slack.com"],
+    assessmentHeading: "Um Dia na Sua Vida Digital — Avaliação de Personalidade",
+    assessmentSub: "Leia cada cenário e escolha a opção que pareça mais natural para você. Suas escolhas são registradas de forma invisível. Responda a todas as perguntas para enviar.",
+    progressCaptionLeft: "respondido",
+    progressCaptionRight: "Vermelho quente indica progresso",
+    questions: []
+  },
+
+  "Czech": {
+    heading: "Vyberte jazyk",
+    subtitle: "Zvolte svůj preferovaný jazyk pro pokračování v průzkumu",
+    langCode: "cs",
+    dir: "ltr",
+    searchPlaceholder: "Hledat jazyky...",
+    continueText: "Pokračovat v průzkumu",
+    basicInfoHeading: "Základní informace",
+    roleHeading: "Vaše role",
+    rolePrompt: "Která role nejlépe popisuje vaši primární pracovní činnost?",
+    roleOptions: [
+      "Vyberte svou roli...","Výkonný ředitel","Strategie","Produkt","Inženýrství","Design","Data a analytika","Programové oddělení","Provoz","Nákup","Zajištění kvality","Informační technologie","Bezpečnost","Podnikové riziko","Finance a účetnictví","Lidské zdroje","Právní a dodržování předpisů","Prodej","Marketing","Úspěch zákazníků a podpora","Partnerství","Prostory"
+    ],
+    domainPrompt: "Jakých je vašich 5 nejčastěji navštěvovaných webů? Zadejte pouze doménová jména (např. google.com, microsoft.com)",
+    domainPlaceholders: ["e.g., google.com","e.g., microsoft.com","e.g., linkedin.com","e.g., zoom.us","e.g., slack.com"],
+    assessmentHeading: "Jeden den ve vašem digitálním životě — Osobnostní hodnocení",
+    assessmentSub: "Přečtěte si každý scénář a vyberte možnost, která vám připadá nejpřirozenější. Vaše volby jsou zaznamenány skrytě. Vyplňte všechny otázky pro odeslání.",
+    progressCaptionLeft: "zodpovězeno",
+    progressCaptionRight: "Teplá červená značí postup",
+    questions: []
+  },
+
+  "Dutch": {
+    heading: "Selecteer taal",
+    subtitle: "Kies uw gewenste taal om door te gaan met de enquête",
+    langCode: "nl",
+    dir: "ltr",
+    searchPlaceholder: "Talen zoeken...",
+    continueText: "Doorgaan naar enquête",
+    basicInfoHeading: "Basisinformatie",
+    roleHeading: "Uw rol",
+    rolePrompt: "Welke rol beschrijft het beste uw primaire werkfunctie?",
+    roleOptions: [
+      "Selecteer uw rol...","Leidinggevende","Strategie","Product","Engineering","Ontwerp","Data en Analytics","Programmabureau","Operaties","Inkoop","Kwaliteitsborging","Informatietechnologie","Beveiliging","Bedrijfsrisico","Financiën en Boekhouding","Human Resources","Juridisch en Compliance","Verkoop","Marketing","Klantsucces en Ondersteuning","Partnerschappen","Faciliteiten"
+    ],
+    domainPrompt: "Wat zijn uw 5 meest bezochte websites? Voer alleen domeinnamen in (bijv. google.com, microsoft.com)",
+    domainPlaceholders: ["bijv., google.com","bijv., microsoft.com","bijv., linkedin.com","bijv., zoom.us","bijv., slack.com"],
+    assessmentHeading: "Een dag in uw digitale leven — Persoonlijkheidsbeoordeling",
+    assessmentSub: "Lees elk scenario en kies de optie die het meest natuurlijk voor u aanvoelt. Uw keuzes worden onzichtbaar vastgelegd. Voltooi alle vragen om in te dienen.",
+    progressCaptionLeft: "beantwoord",
+    progressCaptionRight: "Warm rood geeft vooruitgang aan",
+    questions: []
+  },
+
+  "English": {
+    heading: "Select Language",
+    subtitle: "Choose your preferred language to continue with the survey",
+    langCode: "en",
+    dir: "ltr",
+    searchPlaceholder: "Search languages...",
+    continueText: "Continue to Survey",
+    basicInfoHeading: "Basic Information",
+    roleHeading: "Your Role",
+    rolePrompt: "Which role best describes your primary work function?",
+    roleOptions: [
+      "Select your role...","Executive","Strategy","Product","Engineering","Design","Data and Analytics","Program Office","Operations","Procurement","Quality Assurance","Information Technology","Security","Enterprise Risk","Finance and Accounting","Human Resources","Legal and Compliance","Sales","Marketing","Customer Success and Support","Partnerships","Facilities"
+    ],
+    domainPrompt: "What are your top 5 most visited websites? Enter domain names only (e.g., google.com, microsoft.com)",
+    domainPlaceholders: ["e.g., google.com","e.g., microsoft.com","e.g., linkedin.com","e.g., zoom.us","e.g., slack.com"],
+    assessmentHeading: "A Day in Your Digital Life — Personality Assessment",
+    assessmentSub: "Read each scenario and choose the option that feels most natural to you. Your choices are captured invisibly. Complete all questions to submit.",
+    progressCaptionLeft: "answered",
+    progressCaptionRight: "Warm red indicates progress",
+    questions: []
+  },
+
+  "Estonian": {
+    heading: "Valige keel",
+    subtitle: "Valige oma eelistatud keel, et küsitlusega jätkata",
+    langCode: "et",
+    dir: "ltr",
+    searchPlaceholder: "Otsi keeli...",
+    continueText: "Jätka küsitlusega",
+    basicInfoHeading: "Põhiinfo",
+    roleHeading: "Teie roll",
+    rolePrompt: "Milline roll kirjeldab kõige paremini teie peamist töö funktsiooni?",
+    roleOptions: [
+      "Valige oma roll...","Juhtiv","Strateegia","Toode","Inseneeria","Disain","Andmed ja analüütika","Programmibüroo","Toimingud","Hanked","Kvaliteedikindlustus","Infotehnoloogia","Turvalisus","Ettevõtte risk","Rahandus ja raamatupidamine","Inimressursid","Õigus ja vastavus","Müük","Turundus","Kliendi edu ja tugi","Partnerlused","Rajatised"
+    ],
+    domainPrompt: "Millised on teie 5 kõige enam külastatud veebisaiti? Sisestage ainult domeininimed (nt google.com, microsoft.com)",
+    domainPlaceholders: ["nt, google.com","nt, microsoft.com","nt, linkedin.com","nt, zoom.us","nt, slack.com"],
+    assessmentHeading: "Päev teie digitaalses elus — Isiksuse hindamine",
+    assessmentSub: "Lugege iga stsenaariumi ja valige variant, mis tundub teile kõige loomulikum. Teie valikud jäädvustatakse nähtamatult. Vastake kõigile küsimustele, et esitada.",
+    progressCaptionLeft: "vastatud",
+    progressCaptionRight: "Soe punane näitab edenemist",
+    questions: []
+  },
+
+  "Finnish": {
+    heading: "Valitse kieli",
+    subtitle: "Valitse haluamasi kieli jatkaaksesi kyselyyn",
+    langCode: "fi",
+    dir: "ltr",
+    searchPlaceholder: "Etsi kieliä...",
+    continueText: "Jatka kyselyyn",
+    basicInfoHeading: "Perustiedot",
+    roleHeading: "Roolisi",
+    rolePrompt: "Mikä rooli kuvaa parhaiten ensisijaista työtehtävääsi?",
+    roleOptions: [
+      "Valitse roolisi...","Johtava","Strategia","Tuote","Tekniikka","Suunnittelu","Tiedot ja analytiikka","Ohjelmatoimisto","Toiminnot","Hankinta","Laadunvarmistus","Tietotekniikka","Turvallisuus","Yritysriski","Talous ja kirjanpito","Henkilöstöresurssit","Lakiasiat ja vaatimustenmukaisuus","Myynti","Markkinointi","Asiakasmenestys ja tuki","Kumppanuudet","Tilat"
+    ],
+    domainPrompt: "Mitkä ovat 5 eniten vierailemaasi verkkosivustoa? Syötä vain verkkotunnukset (esim. google.com, microsoft.com)",
+    domainPlaceholders: ["esim., google.com","esim., microsoft.com","esim., linkedin.com","esim., zoom.us","esim., slack.com"],
+    assessmentHeading: "Päivä digitaalisessa elämässäsi — Persoonallisuuden arviointi",
+    assessmentSub: "Lue jokainen skenaario ja valitse vaihtoehto, joka tuntuu sinulle luonnollisimmalta. Valintasi tallennetaan näkymättömästi. Vastaa kaikkiin kysymyksiin lähettääksesi.",
+    progressCaptionLeft: "vastattu",
+    progressCaptionRight: "Lämmin punainen osoittaa edistymistä",
+    questions: []
+  },
+
+  "French Canadian": {
+    heading: "Sélectionnez la langue",
+    subtitle: "Choisissez votre langue préférée pour continuer avec l'enquête",
+    langCode: "fr-CA",
+    dir: "ltr",
+    searchPlaceholder: "Rechercher des langues...",
+    continueText: "Continuer vers l'enquête",
+    basicInfoHeading: "Informations de base",
+    roleHeading: "Votre rôle",
+    rolePrompt: "Quel rôle décrit le mieux votre fonction de travail principale?",
+    roleOptions: [
+      "Sélectionnez votre rôle...","Exécutif","Stratégie","Produit","Ingénierie","Design","Données et analytique","Bureau de programme","Opérations","Approvisionnement","Assurance qualité","Technologie de l'information","Sécurité","Risque d'entreprise","Finance et comptabilité","Ressources humaines","Juridique et conformité","Ventes","Marketing","Succès client et support","Partenariats","Installations"
+    ],
+    domainPrompt: "Quels sont vos 5 sites web les plus visités? Entrez seulement les noms de domaine (p. ex., google.com, microsoft.com)",
+    domainPlaceholders: ["p. ex., google.com","p. ex., microsoft.com","p. ex., linkedin.com","p. ex., zoom.us","p. ex., slack.com"],
+    assessmentHeading: "Une journée dans votre vie numérique — Évaluation de personnalité",
+    assessmentSub: "Lisez chaque scénario et choisissez l'option qui vous semble la plus naturelle. Vos choix sont capturés de manière invisible. Complétez toutes les questions pour soumettre.",
+    progressCaptionLeft: "répondu",
+    progressCaptionRight: "Le rouge chaud indique le progrès",
+    questions: []
+  },
+
+  "French Parisian": {
+    heading: "Sélectionnez la langue",
+    subtitle: "Choisissez votre langue préférée pour continuer avec l'enquête",
+    langCode: "fr",
+    dir: "ltr",
+    searchPlaceholder: "Rechercher des langues...",
+    continueText: "Continuer vers l'enquête",
+    basicInfoHeading: "Informations de base",
+    roleHeading: "Votre rôle",
+    rolePrompt: "Quel rôle décrit le mieux votre fonction de travail principale?",
+    roleOptions: [
+      "Sélectionnez votre rôle...","Exécutif","Stratégie","Produit","Ingénierie","Design","Données et analytique","Bureau de programme","Opérations","Approvisionnement","Assurance qualité","Technologie de l'information","Sécurité","Risque d'entreprise","Finance et comptabilité","Ressources humaines","Juridique et conformité","Ventes","Marketing","Succès client et support","Partenariats","Installations"
+    ],
+    domainPrompt: "Quels sont vos 5 sites web les plus visités ? Saisissez uniquement les noms de domaine (par exemple, google.com, microsoft.com)",
+    domainPlaceholders: ["par exemple, google.com","par exemple, microsoft.com","par exemple, linkedin.com","par exemple, zoom.us","par exemple, slack.com"],
+    assessmentHeading: "Une journée dans votre vie numérique — Évaluation de personnalité",
+    assessmentSub: "Lisez chaque scénario et choisissez l'option qui vous semble la plus naturelle. Vos choix sont capturés de manière invisible. Complétez toutes les questions pour soumettre.",
+    progressCaptionLeft: "répondu",
+    progressCaptionRight: "Le rouge chaud indique le progrès",
+    questions: []
+  },
+
+  "German": {
+    heading: "Sprache auswählen",
+    subtitle: "Wählen Sie Ihre bevorzugte Sprache, um mit der Umfrage fortzufahren.",
+    langCode: "de",
+    dir: "ltr",
+    searchPlaceholder: "Sprachen suchen...",
+    continueText: "Zur Umfrage fortfahren",
+    basicInfoHeading: "Grundinformationen",
+    roleHeading: "Ihre Rolle",
+    rolePrompt: "Welche Rolle beschreibt Ihre primäre Arbeitsfunktion am besten?",
+    roleOptions: [
+      "Wählen Sie Ihre Rolle...","Führungskraft","Strategie","Produkt","Entwicklung","Design","Daten und Analytik","Programm-Abteilung","Betrieb","Beschaffung","Qualitätssicherung","Informationstechnologie","Sicherheit","Unternehmensrisiken","Finanzen und Buchhaltung","Personalwesen","Recht und Compliance","Vertrieb","Marketing","Kundenerfolg und Support","Partnerschaften","Einrichtungen"
+    ],
+    domainPrompt: "Was sind Ihre fünf meistbesuchten Websites? Geben Sie nur Domainnamen ein (z. B. google.com, microsoft.com)",
+    domainPlaceholders: ["z. B., google.com","z. B., microsoft.com","z. B., linkedin.com","z. B., zoom.us","z. B., slack.com"],
+    assessmentHeading: "Ein Tag in Ihrem digitalen Leben — Persönlichkeitsbeurteilung",
+    assessmentSub: "Lesen Sie jede Situation und wählen Sie die Option, die sich für Sie am natürlichsten anfühlt. Ihre Auswahlen werden unsichtbar erfasst. Beenden Sie alle Fragen, um abzuschließen.",
+    progressCaptionLeft: "Beantwortet",
+    progressCaptionRight: "Warme Rot zeigt den Fortschritt an",
+    questions: []
+  },
+
+  "Hebrew": {
+    heading: "בחר שפה",
+    subtitle: "בחר את השפה המועדפת עליך כדי להמשיך עם הסקר",
+    langCode: "he",
+    dir: "rtl",
+    searchPlaceholder: "חפש שפות...",
+    continueText: "המשך לסקר",
+    basicInfoHeading: "מידע בסיסי",
+    roleHeading: "התפקיד שלך",
+    rolePrompt: "איזה תפקיד מתאר הכי טוב את תפקיד העבודה העיקרי שלך?",
+    roleOptions: [
+      "בחר את התפקיד שלך...","מנהל","אסטרטגיה","מוצר","הנדסה","עיצוב","נתונים ואנליטיקה","משרד תוכנית","פעולות","רכש","הבטחת איכות","טכנולוגיית מידע","אבטחה","סיכון ארגוני","כספים וחשבונאות","משאבי אנוש","משפט ותאימות","מכירות","שיווק","הצלחת לקוחות ותמיכה","שותפויות","מתקנים"
+    ],
+    domainPrompt: "מהם 5 האתרים הכי מבוקרים שלך? הכנס רק שמות דומיין (לדוגמה, google.com, microsoft.com)",
+    domainPlaceholders: ["לדוגמה, google.com","לדוגמה, microsoft.com","לדוגמה, linkedin.com","לדוגמה, zoom.us","לדוגמה, slack.com"],
+    assessmentHeading: "יום בחיים הדיגיטליים שלך — הערכת אישיות",
+    assessmentSub: "קרא כל תרחיש ובחר את האפשרות שמרגישה הכי טבעית עבורך. הבחירות שלך נרשמות באופן בלתי נראה. השלם את כל השאלות כדי לשלוח.",
+    progressCaptionLeft: "נענה",
+    progressCaptionRight: "אדום חם מציין התקדמות",
+    questions: []
+  },
+
+  "Hindi": {
+    heading: "भाषा चुनें",
+    subtitle: "सर्वेक्षण जारी रखने के लिए अपनी पसंदीदा भाषा चुनें",
+    langCode: "hi",
+    dir: "ltr",
+    searchPlaceholder: "भाषाएं खोजें...",
+    continueText: "सर्वेक्षण जारी रखें",
+    basicInfoHeading: "बुनियादी जानकारी",
+    roleHeading: "आपकी भूमिका",
+    rolePrompt: "कौन सी भूमिका आपके प्राथमिक कार्य कार्यक्षेत्र का सबसे अच्छा वर्णन करती है?",
+    roleOptions: [
+      "अपनी भूमिका चुनें...","कार्यकारी","रणनीति","उत्पाद","इंजीनियरिंग","डिज़ाइन","डेटा और एनालिटिक्स","कार्यक्रम कार्यालय","संचालन","खरीद","गुणवत्ता आश्वासन","सूचना प्रौद्योगिकी","सुरक्षा","एंटरप्राइज जोखिम","वित्त और लेखांकन","मानव संसाधन","कानूनी और अनुपालन","बिक्री","मार्केटिंग","ग्राहक सफलता और सहायता","साझेदारी","सुविधाएं"
+    ],
+    domainPrompt: "आपकी शीर्ष 5 सबसे अधिक देखी जाने वाली वेबसाइटें कौन सी हैं? केवल डोमेन नाम दर्ज करें (जैसे, google.com, microsoft.com)",
+    domainPlaceholders: ["जैसे, google.com","जैसे, microsoft.com","जैसे, linkedin.com","जैसे, zoom.us","जैसे, slack.com"],
+    assessmentHeading: "आपके डिजिटल जीवन में एक दिन — व्यक्तित्व मूल्यांकन",
+    assessmentSub: "प्रत्येक परिस्थिति पढ़ें और वह विकल्प चुनें जो आपके लिए सबसे प्राकृतिक लगता है। आपकी पसंद अदृश्य रूप से कैप्चर की जाती है। सबमिट करने के लिए सभी प्रश्नों को पूरा करें।",
+    progressCaptionLeft: "उत्तर दिया गया",
+    progressCaptionRight: "गर्म लाल प्रगति दर्शाता है",
+    questions: []
+  },
+
+  "Hungarian": {
+    heading: "Válasszon nyelvet",
+    subtitle: "Válassza ki a kívánt nyelvet a felmérés folytatásához",
+    langCode: "hu",
+    dir: "ltr",
+    searchPlaceholder: "Nyelvek keresése...",
+    continueText: "Folytatás a felméréshez",
+    basicInfoHeading: "Alapinformációk",
+    roleHeading: "Az Ön szerepe",
+    rolePrompt: "Melyik szerep írja le a legjobban az Ön elsődleges munkaköri funkcióját?",
+    roleOptions: [
+      "Válassza ki a szerepét...","Vezető","Stratégia","Termék","Mérnöki","Tervezés","Adat és elemzés","Program iroda","Műveletek","Beszerzés","Minőségbiztosítás","Információtechnológia","Biztonság","Vállalati kockázat","Pénzügy és számvitel","Emberi erőforrások","Jogi és megfelelőség","Értékesítés","Marketing","Ügyfél siker és támogatás","Partnerségek","Létesítmények"
+    ],
+    domainPrompt: "Melyek az 5 leglátogatottabb webhelyei? Csak a doméinneveket adja meg (pl. google.com, microsoft.com)",
+    domainPlaceholders: ["pl., google.com","pl., microsoft.com","pl., linkedin.com","pl., zoom.us","pl., slack.com"],
+    assessmentHeading: "Egy nap az Ön digitális életében — Személyiségfelmérés",
+    assessmentSub: "Olvassa el minden forgatókönyvet, és válassza ki azt az opciót, amely a legkevésbé természetesnek tűnik Önnek. Az Ön választásait láthatatlanul rögzítjük. Töltse ki az összes kérdést a beküldéshez.",
+    progressCaptionLeft: "válaszolt",
+    progressCaptionRight: "A meleg vörös jelzi a haladást",
+    questions: []
+  },
+
+  "Italian": {
+    heading: "Seleziona lingua",
+    subtitle: "Scegli la tua lingua preferita per continuare con il sondaggio",
+    langCode: "it",
+    dir: "ltr",
+    searchPlaceholder: "Cerca lingue...",
+    continueText: "Continua al sondaggio",
+    basicInfoHeading: "Informazioni di base",
+    roleHeading: "Il tuo ruolo",
+    rolePrompt: "Quale ruolo descrive meglio la tua funzione lavorativa primaria?",
+    roleOptions: [
+      "Seleziona il tuo ruolo...","Esecutivo","Strategia","Prodotto","Ingegneria","Design","Dati e analisi","Ufficio programmi","Operazioni","Approvvigionamento","Assicurazione qualità","Tecnologie dell'informazione","Sicurezza","Rischio aziendale","Finanza e contabilità","Risorse umane","Legale e conformità","Vendite","Marketing","Successo del cliente e supporto","Partnership","Strutture"
+    ],
+    domainPrompt: "Quali sono i tuoi 5 siti web più visitati? Inserisci solo i nomi di dominio (ad esempio, google.com, microsoft.com)",
+    domainPlaceholders: ["ad esempio, google.com","ad esempio, microsoft.com","ad esempio, linkedin.com","ad esempio, zoom.us","ad esempio, slack.com"],
+    assessmentHeading: "Un giorno nella tua vita digitale — Valutazione della personalità",
+    assessmentSub: "Leggi ogni scenario e scegli l'opzione che ti sembra più naturale. Le tue scelte vengono catturate invisibilmente. Completa tutte le domande per inviare.",
+    progressCaptionLeft: "risposto",
+    progressCaptionRight: "Il rosso caldo indica progresso",
+    questions: []
+  },
+
+  "Japanese": {
+    heading: "言語を選択",
+    subtitle: "調査を続行するには、希望する言語を選択してください",
+    langCode: "ja",
+    dir: "ltr",
+    searchPlaceholder: "言語を検索...",
+    continueText: "調査を続行",
+    basicInfoHeading: "基本情報",
+    roleHeading: "あなたの役割",
+    rolePrompt: "あなたの主要な業務機能を最もよく表す役割はどれですか？",
+    roleOptions: [
+      "役割を選択してください...","エグゼクティブ","戦略","製品","エンジニアリング","デザイン","データと分析","プログラムオフィス","運用","調達","品質保証","情報技術","セキュリティ","企業リスク","財務と会計","人事","法務とコンプライアンス","営業","マーケティング","カスタマーサクセスとサポート","パートナーシップ","施設"
+    ],
+    domainPrompt: "最もよく訪問する上位5つのウェブサイトは何ですか？ドメイン名のみを入力してください（例：google.com、microsoft.com）",
+    domainPlaceholders: ["例、google.com","例、microsoft.com","例、linkedin.com","例、zoom.us","例、slack.com"],
+    assessmentHeading: "あなたのデジタルライフでの一日 — パーソナリティ評価",
+    assessmentSub: "各シナリオを読み、あなたにとって最も自然に感じられるオプションを選択してください。あなたの選択は見えないように記録されます。すべての質問に回答して提出してください。",
+    progressCaptionLeft: "回答済み",
+    progressCaptionRight: "暖かい赤は進捗を示します",
+    questions: []
+  },
+
+  "Korean": {
+    heading: "언어 선택",
+    subtitle: "설문 조사를 계속하려면 원하는 언어를 선택하십시오",
+    langCode: "ko",
+    dir: "ltr",
+    searchPlaceholder: "언어 검색...",
+    continueText: "설문 조사 계속",
+    basicInfoHeading: "기본 정보",
+    roleHeading: "당신의 역할",
+    rolePrompt: "당신의 주요 업무 기능을 가장 잘 설명하는 역할은 무엇입니까?",
+    roleOptions: [
+      "역할을 선택하세요...","임원","전략","제품","엔지니어링","디자인","데이터 및 분석","프로그램 사무소","운영","조달","품질 보증","정보 기술","보안","기업 위험","재무 및 회계","인사","법무 및 규정 준수","영업","마케팅","고객 성공 및 지원","파트너십","시설"
+    ],
+    domainPrompt: "가장 많이 방문하는 상위 5개 웹사이트는 무엇입니까? 도메인 이름만 입력하세요 (예: google.com, microsoft.com)",
+    domainPlaceholders: ["예, google.com","예, microsoft.com","예, linkedin.com","예, zoom.us","예, slack.com"],
+    assessmentHeading: "당신의 디지털 생활에서의 하루 — 성격 평가",
+    assessmentSub: "각 시나리오를 읽고 가장 자연스럽게 느껴지는 옵션을 선택하세요. 당신의 선택은 보이지 않게 기록됩니다. 모든 질문에 답하여 제출하세요.",
+    progressCaptionLeft: "답변됨",
+    progressCaptionRight: "따뜻한 빨간색은 진행 상황을 나타냅니다",
+    questions: []
+  },
+
+  "Latin American Spanish": {
+    heading: "Seleccionar idioma",
+    subtitle: "Elige tu idioma preferido para continuar con la encuesta",
+    langCode: "es-LA",
+    dir: "ltr",
+    searchPlaceholder: "Buscar idiomas...",
+    continueText: "Continuar con la encuesta",
+    basicInfoHeading: "Información básica",
+    roleHeading: "Tu rol",
+    rolePrompt: "¿Qué rol describe mejor tu función principal de trabajo?",
+    roleOptions: [
+      "Selecciona tu rol...","Ejecutivo","Estrategia","Producto","Ingeniería","Diseño","Datos y análisis","Oficina de programas","Operaciones","Adquisiciones","Aseguramiento de calidad","Tecnología de la información","Seguridad","Riesgo empresarial","Finanzas y contabilidad","Recursos humanos","Legal y cumplimiento","Ventas","Marketing","Éxito del cliente y soporte","Alianzas","Instalaciones"
+    ],
+    domainPrompt: "¿Cuáles son los 5 sitios web que más visitas? Ingresa solo los nombres de dominio (ej., google.com, microsoft.com)",
+    domainPlaceholders: ["ej., google.com","ej., microsoft.com","ej., linkedin.com","ej., zoom.us","ej., slack.com"],
+    assessmentHeading: "Un día en tu vida digital — Evaluación de personalidad",
+    assessmentSub: "Lee cada escenario y elige la opción que te parezca más natural. Tus elecciones se capturan de forma invisible. Completa todas las preguntas para enviar.",
+    progressCaptionLeft: "respondido",
+    progressCaptionRight: "El rojo cálido indica progreso",
+    questions: []
+  },
+
+  "Malay": {
+    heading: "Pilih Bahasa",
+    subtitle: "Pilih bahasa pilihan anda untuk meneruskan tinjauan",
+    langCode: "ms",
+    dir: "ltr",
+    searchPlaceholder: "Cari bahasa...",
+    continueText: "Teruskan ke Tinjauan",
+    basicInfoHeading: "Maklumat Asas",
+    roleHeading: "Peranan Anda",
+    rolePrompt: "Peranan manakah yang paling menggambarkan fungsi kerja utama anda?",
+    roleOptions: [
+      "Pilih peranan anda...","Eksekutif","Strategi","Produk","Kejuruteraan","Reka bentuk","Data dan analitik","Pejabat program","Operasi","Perolehan","Jaminan kualiti","Teknologi maklumat","Keselamatan","Risiko perusahaan","Kewangan dan perakaunan","Sumber manusia","Undang-undang dan pematuhan","Jualan","Pemasaran","Kejayaan pelanggan dan sokongan","Perkongsian","Kemudahan"
+    ],
+    domainPrompt: "Apakah 5 laman web yang paling kerap anda lawati? Masukkan nama domain sahaja (cth., google.com, microsoft.com)",
+    domainPlaceholders: ["cth., google.com","cth., microsoft.com","cth., linkedin.com","cth., zoom.us","cth., slack.com"],
+    assessmentHeading: "Sehari dalam Kehidupan Digital Anda — Penilaian Personaliti",
+    assessmentSub: "Baca setiap senario dan pilih pilihan yang paling semulajadi untuk anda. Pilihan anda ditangkap secara tidak kelihatan. Lengkapkan semua soalan untuk hantar.",
+    progressCaptionLeft: "dijawab",
+    progressCaptionRight: "Merah hangat menunjukkan kemajuan",
+    questions: []
+  },
+
+  "Norwegian": {
+    heading: "Velg språk",
+    subtitle: "Velg ditt foretrukne språk for å fortsette med undersøkelsen",
+    langCode: "no",
+    dir: "ltr",
+    searchPlaceholder: "Søk språk...",
+    continueText: "Fortsett til undersøkelse",
+    basicInfoHeading: "Grunnleggende informasjon",
+    roleHeading: "Din rolle",
+    rolePrompt: "Hvilken rolle beskriver best din primære arbeidsfunksjon?",
+    roleOptions: [
+      "Velg din rolle...","Utøvende","Strategi","Produkt","Teknikk","Design","Data og analyse","Programkontor","Operasjoner","Innkjøp","Kvalitetssikring","Informasjonsteknologi","Sikkerhet","Bedriftsrisiko","Finans og regnskap","Menneskelige ressurser","Juridisk og overholdelse","Salg","Markedsføring","Kundesuksess og støtte","Partnerskap","Anlegg"
+    ],
+    domainPrompt: "Hva er dine 5 mest besøkte nettsider? Skriv bare domenenavn (f.eks., google.com, microsoft.com)",
+    domainPlaceholders: ["f.eks., google.com","f.eks., microsoft.com","f.eks., linkedin.com","f.eks., zoom.us","f.eks., slack.com"],
+    assessmentHeading: "En dag i ditt digitale liv — Personlighetsvurdering",
+    assessmentSub: "Les hvert scenario og velg alternativet som føles mest naturlig for deg. Dine valg registreres usynlig. Fullfør alle spørsmål for å sende inn.",
+    progressCaptionLeft: "svart",
+    progressCaptionRight: "Varm rød indikerer fremgang",
+    questions: []
+  },
+
+  "Polish": {
+    heading: "Wybierz język",
+    subtitle: "Wybierz preferowany język, aby kontynuować badanie",
+    langCode: "pl",
+    dir: "ltr",
+    searchPlaceholder: "Szukaj języków...",
+    continueText: "Kontynuuj badanie",
+    basicInfoHeading: "Podstawowe informacje",
+    roleHeading: "Twoja rola",
+    rolePrompt: "Która rola najlepiej opisuje Twoją główną funkcję zawodową?",
+    roleOptions: [
+      "Wybierz swoją rolę...","Kierownictwo","Strategia","Produkt","Inżynieria","Projektowanie","Dane i analityka","Biuro programów","Operacje","Zamówienia","Zapewnienie jakości","Technologie informacyjne","Bezpieczeństwo","Ryzyko przedsiębiorstwa","Finanse i księgowość","Zasoby ludzkie","Prawne i zgodność","Sprzedaż","Marketing","Sukces klienta i wsparcie","Partnerstwa","Obiekty"
+    ],
+    domainPrompt: "Jakie są Twoje 5 najczęściej odwiedzanych stron internetowych? Wprowadź tylko nazwy domen (np., google.com, microsoft.com)",
+    domainPlaceholders: ["np., google.com","np., microsoft.com","np., linkedin.com","np., zoom.us","np., slack.com"],
+    assessmentHeading: "Dzień w Twoim życiu cyfrowym — Ocena osobowości",
+    assessmentSub: "Przeczytaj każdy scenariusz i wybierz opcję, która wydaje Ci się najbardziej naturalna. Twoje wybory są rejestrowane niewidocznie. Ukończ wszystkie pytania, aby przesłać.",
+    progressCaptionLeft: "odpowiedziano",
+    progressCaptionRight: "Ciepły czerwony wskazuje postęp",
+    questions: []
+  },
+
+  "Portugal Portuguese": {
+    heading: "Seleccionar idioma",
+    subtitle: "Escolha o seu idioma preferido para continuar com o inquérito",
+    langCode: "pt",
+    dir: "ltr",
+    searchPlaceholder: "Procurar idiomas...",
+    continueText: "Continuar para o inquérito",
+    basicInfoHeading: "Informação básica",
+    roleHeading: "O seu papel",
+    rolePrompt: "Que papel descreve melhor a sua função de trabalho principal?",
+    roleOptions: [
+      "Seleccione o seu papel...","Executivo","Estratégia","Produto","Engenharia","Design","Dados e análise","Gabinete de programa","Operações","Aquisição","Garantia de qualidade","Tecnologia da informação","Segurança","Risco empresarial","Finanças e contabilidade","Recursos humanos","Jurídico e conformidade","Vendas","Marketing","Sucesso do cliente e apoio","Parcerias","Instalações"
+    ],
+    domainPrompt: "Quais são os seus 5 sites mais visitados? Digite apenas os nomes de domínio (por exemplo, google.com, microsoft.com)",
+    domainPlaceholders: ["por exemplo, google.com","por exemplo, microsoft.com","por exemplo, linkedin.com","por exemplo, zoom.us","por exemplo, slack.com"],
+    assessmentHeading: "Um dia na sua vida digital — Avaliação de personalidade",
+    assessmentSub: "Leia cada cenário e escolha a opção que lhe parece mais natural. As suas escolhas são capturadas invisivelmente. Complete todas as perguntas para submeter.",
+    progressCaptionLeft: "respondido",
+    progressCaptionRight: "Vermelho quente indica progresso",
+    questions: []
+  },
+
+  "Romanian": {
+    heading: "Selectați limba",
+    subtitle: "Alegeți limba preferată pentru a continua cu sondajul",
+    langCode: "ro",
+    dir: "ltr",
+    searchPlaceholder: "Căutați limbi...",
+    continueText: "Continuați la sondaj",
+    basicInfoHeading: "Informații de bază",
+    roleHeading: "Rolul dvs.",
+    rolePrompt: "Ce rol descrie cel mai bine funcția dvs. principală de lucru?",
+    roleOptions: [
+      "Selectați-vă rolul...","Executiv","Strategie","Produs","Inginerie","Design","Date și analize","Biroul de program","Operațiuni","Achiziții","Asigurarea calității","Tehnologia informației","Securitate","Risc întreprindere","Finanțe și contabilitate","Resurse umane","Juridic și conformitate","Vânzări","Marketing","Succesul clientului și suport","Parteneriate","Facilități"
+    ],
+    domainPrompt: "Care sunt cele mai vizitate 5 site-uri web ale dvs.? Introduceți doar numele de domeniu (de ex., google.com, microsoft.com)",
+    domainPlaceholders: ["de ex., google.com","de ex., microsoft.com","de ex., linkedin.com","de ex., zoom.us","de ex., slack.com"],
+    assessmentHeading: "O zi în viața dvs. digitală — Evaluarea personalității",
+    assessmentSub: "Citiți fiecare scenariu și alegeți opțiunea care vi se pare cea mai naturală. Alegerile dvs. sunt capturate invizibil. Completați toate întrebările pentru a trimite.",
+    progressCaptionLeft: "răspuns",
+    progressCaptionRight: "Roșul cald indică progresul",
+    questions: []
+  },
+
+  "Russian": {
+    heading: "Выберите язык",
+    subtitle: "Выберите предпочитаемый язык для продолжения опроса",
+    langCode: "ru",
+    dir: "ltr",
+    searchPlaceholder: "Поиск языков...",
+    continueText: "Продолжить к опросу",
+    basicInfoHeading: "Основная информация",
+    roleHeading: "Ваша роль",
+    rolePrompt: "Какая роль лучше всего описывает вашу основную рабочую функцию?",
+    roleOptions: [
+      "Выберите свою роль...","Исполнительный","Стратегия","Продукт","Инженерия","Дизайн","Данные и аналитика","Программный офис","Операции","Закупки","Обеспечение качества","Информационные технологии","Безопасность","Корпоративный риск","Финансы и учет","Человеческие ресурсы","Юридические и соответствие","Продажи","Маркетинг","Успех клиентов и поддержка","Партнерства","Объекты"
+    ],
+    domainPrompt: "Какие ваши 5 самых посещаемых веб-сайтов? Введите только доменные имена (например, google.com, microsoft.com)",
+    domainPlaceholders: ["например, google.com","например, microsoft.com","например, linkedin.com","например, zoom.us","например, slack.com"],
+    assessmentHeading: "День в вашей цифровой жизни — Оценка личности",
+    assessmentSub: "Прочитайте каждый сценарий и выберите вариант, который кажется вам наиболее естественным. Ваш выбор записывается незаметно. Завершите все вопросы для отправки.",
+    progressCaptionLeft: "отвечено",
+    progressCaptionRight: "Теплый красный указывает на прогресс",
+    questions: []
+  },
+
+  "Simplified Chinese": {
+    heading: "选择语言",
+    subtitle: "选择您的首选语言以继续调查",
+    langCode: "zh-CN",
+    dir: "ltr",
+    searchPlaceholder: "搜索语言...",
+    continueText: "继续调查",
+    basicInfoHeading: "基本信息",
+    roleHeading: "您的角色",
+    rolePrompt: "哪个角色最能描述您的主要工作职能？",
+    roleOptions: [
+      "选择您的角色...","执行","策略","产品","工程","设计","数据和分析","项目办公室","运营","采购","质量保证","信息技术","安全","企业风险","财务和会计","人力资源","法律和合规","销售","营销","客户成功和支持","合作伙伴关系","设施"
+    ],
+    domainPrompt: "您访问最多的5个网站是什么？只输入域名（例如，google.com，microsoft.com）",
+    domainPlaceholders: ["例如，google.com","例如，microsoft.com","例如，linkedin.com","例如，zoom.us","例如，slack.com"],
+    assessmentHeading: "您数字生活中的一天 — 性格评估",
+    assessmentSub: "阅读每个场景并选择对您来说最自然的选项。您的选择被无形地捕获。完成所有问题以提交。",
+    progressCaptionLeft: "已回答",
+    progressCaptionRight: "暖红色表示进度",
+    questions: []
+  },
+
+  "Slovak": {
+    heading: "Vybrať jazyk",
+    subtitle: "Vyberte si preferovaný jazyk na pokračovanie v prieskume",
+    langCode: "sk",
+    dir: "ltr",
+    searchPlaceholder: "Hľadať jazyky...",
+    continueText: "Pokračovať v prieskume",
+    basicInfoHeading: "Základné informácie",
+    roleHeading: "Vaša rola",
+    rolePrompt: "Ktorá rola najlepšie opisuje vašu primárnu pracovnú funkciu?",
+    roleOptions: [
+      "Vyberte svoju rolu...","Výkonný","Stratégia","Produkt","Inžinierstvo","Dizajn","Dáta a analytika","Programová kancelária","Operácie","Obstarávanie","Zabezpečenie kvality","Informačné technológie","Bezpečnosť","Podnikové riziko","Financie a účtovníctvo","Ľudské zdroje","Právne a súlad","Predaj","Marketing","Úspech zákazníka a podpora","Partnerstvá","Zariadenia"
+    ],
+    domainPrompt: "Aké sú vaše 5 najnavštevovanejších webových stránok? Zadajte iba názvy domén (napr., google.com, microsoft.com)",
+    domainPlaceholders: ["napr., google.com","napr., microsoft.com","napr., linkedin.com","napr., zoom.us","napr., slack.com"],
+    assessmentHeading: "Deň vo vašom digitálnom živote — Hodnotenie osobnosti",
+    assessmentSub: "Prečítajte si každý scenár a vyberte možnosť, ktorá sa vám zdá najprirodzenejšia. Vaše voľby sú zachytené neviditeľne. Dokončite všetky otázky na odoslanie.",
+    progressCaptionLeft: "odpovedané",
+    progressCaptionRight: "Teplá červená označuje pokrok",
+    questions: []
+  },
+
+  "Swedish": {
+    heading: "Välj språk",
+    subtitle: "Välj ditt föredragna språk för att fortsätta med undersökningen",
+    langCode: "sv",
+    dir: "ltr",
+    searchPlaceholder: "Sök språk...",
+    continueText: "Fortsätt till undersökning",
+    basicInfoHeading: "Grundläggande information",
+    roleHeading: "Din roll",
+    rolePrompt: "Vilken roll beskriver bäst din primära arbetsfunktion?",
+    roleOptions: [
+      "Välj din roll...","Verkställande","Strategi","Produkt","Teknik","Design","Data och analys","Programkontor","Operationer","Inköp","Kvalitetssäkring","Informationsteknik","Säkerhet","Företagsrisk","Ekonomi och redovisning","Personalresurser","Juridik och efterlevnad","Försäljning","Marknadsföring","Kundsuccé och support","Partnerskap","Anläggningar"
+    ],
+    domainPrompt: "Vilka är dina 5 mest besökta webbplatser? Ange endast domännamn (t.ex., google.com, microsoft.com)",
+    domainPlaceholders: ["t.ex., google.com","t.ex., microsoft.com","t.ex., linkedin.com","t.ex., zoom.us","t.ex., slack.com"],
+    assessmentHeading: "En dag i ditt digitala liv — Personlighetsbedömning",
+    assessmentSub: "Läs varje scenario och välj det alternativ som känns mest naturligt för dig. Dina val fångas osynligt. Slutför alla frågor för att skicka in.",
+    progressCaptionLeft: "svarad",
+    progressCaptionRight: "Varm röd indikerar framsteg",
+    questions: []
+  },
+
+  "Thai": {
+    heading: "เลือกภาษา",
+    subtitle: "เลือกภาษาที่คุณต้องการเพื่อทำแบบสำรวจต่อไป",
+    langCode: "th",
+    dir: "ltr",
+    searchPlaceholder: "ค้นหาภาษา...",
+    continueText: "ดำเนินการต่อไปยังแบบสำรวจ",
+    basicInfoHeading: "ข้อมูลพื้นฐาน",
+    roleHeading: "บทบาทของคุณ",
+    rolePrompt: "บทบาทใดที่อธิบายหน้าที่การทำงานหลักของคุณได้ดีที่สุด?",
+    roleOptions: [
+      "เลือกบทบาทของคุณ...","ผู้บริหาร","กลยุทธ์","ผลิตภัณฑ์","วิศวกรรม","การออกแบบ","ข้อมูลและการวิเคราะห์","สำนักงานโครงการ","การดำเนินงาน","การจัดหา","การประกันคุณภาพ","เทคโนโลยีสารสนเทศ","ความปลอดภัย","ความเสี่ยงขององค์กร","การเงินและบัญชี","ทรัพยากรมนุษย์","กฎหมายและการปฏิบัติตาม","การขาย","การตลาด","ความสำเร็จของลูกค้าและการสนับสนุน","ความร่วมมือ","สิ่งอำนวยความสะดวก"
+    ],
+    domainPrompt: "เว็บไซต์ 5 อันดับแรกที่คุณเข้าชมมากที่สุดคืออะไร? ใส่เฉพาะชื่อโดเมน (เช่น google.com, microsoft.com)",
+    domainPlaceholders: ["เช่น google.com","เช่น microsoft.com","เช่น linkedin.com","เช่น zoom.us","เช่น slack.com"],
+    assessmentHeading: "หนึ่งวันในชีวิตดิจิทัลของคุณ — การประเมินบุคลิกภาพ",
+    assessmentSub: "อ่านแต่ละสถานการณ์และเลือกตัวเลือกที่รู้สึกเป็นธรรมชาติที่สุดสำหรับคุณ ตัวเลือกของคุณจะถูกจับได้อย่างไม่เห็น ทำคำถามทั้งหมดให้เสร็จเพื่อส่ง",
+    progressCaptionLeft: "ตอบแล้ว",
+    progressCaptionRight: "สีแดงอุ่นแสดงความก้าวหน้า",
+    questions: []
+  },
+
+  "Traditional Chinese": {
+    heading: "選擇語言",
+    subtitle: "選擇您的首選語言以繼續調查",
+    langCode: "zh-TW",
+    dir: "ltr",
+    searchPlaceholder: "搜尋語言...",
+    continueText: "繼續調查",
+    basicInfoHeading: "基本資訊",
+    roleHeading: "您的角色",
+    rolePrompt: "哪個角色最能描述您的主要工作職能？",
+    roleOptions: [
+      "選擇您的角色...","執行","策略","產品","工程","設計","數據和分析","項目辦公室","營運","採購","質量保證","資訊科技","安全","企業風險","財務和會計","人力資源","法律和合規","銷售","營銷","客戶成功和支援","合作夥伴關係","設施"
+    ],
+    domainPrompt: "您訪問最多的5個網站是什麼？只輸入域名（例如，google.com，microsoft.com）",
+    domainPlaceholders: ["例如，google.com","例如，microsoft.com","例如，linkedin.com","例如，zoom.us","例如，slack.com"],
+    assessmentHeading: "您數字生活中的一天 — 性格評估",
+    assessmentSub: "閱讀每個場景並選擇對您來說最自然的選項。您的選擇被無形地捕獲。完成所有問題以提交。",
+    progressCaptionLeft: "已回答",
+    progressCaptionRight: "暖紅色表示進度",
+    questions: []
+  },
+
+  "Turkish": {
+    heading: "Dil Seçin",
+    subtitle: "Ankete devam etmek için tercih ettiğiniz dili seçin",
+    langCode: "tr",
+    dir: "ltr",
+    searchPlaceholder: "Dilleri ara...",
+    continueText: "Ankete Devam Et",
+    basicInfoHeading: "Temel Bilgiler",
+    roleHeading: "Rolünüz",
+    rolePrompt: "Hangi rol birincil iş işlevinizi en iyi tanımlar?",
+    roleOptions: [
+      "Rolünüzü seçin...","Yönetici","Strateji","Ürün","Mühendislik","Tasarım","Veri ve analitik","Program ofisi","Operasyonlar","Satın alma","Kalite güvencesi","Bilgi teknolojisi","Güvenlik","Kurumsal risk","Finans ve muhasebe","İnsan kaynakları","Hukuk ve uyumluluk","Satış","Pazarlama","Müşteri başarısı ve destek","Ortaklıklar","Tesisler"
+    ],
+    domainPrompt: "En çok ziyaret ettiğiniz 5 web sitesi nedir? Yalnızca alan adlarını girin (örn., google.com, microsoft.com)",
+    domainPlaceholders: ["örn., google.com","örn., microsoft.com","örn., linkedin.com","örn., zoom.us","örn., slack.com"],
+    assessmentHeading: "Dijital Yaşamınızda Bir Gün — Kişilik Değerlendirmesi",
+    assessmentSub: "Her senaryoyu okuyun ve size en doğal gelen seçeneği seçin. Seçimleriniz görünmez şekilde kaydedilir. Göndermek için tüm soruları tamamlayın.",
+    progressCaptionLeft: "yanıtlandı",
+    progressCaptionRight: "Sıcak kırmızı ilerlemeyi gösterir",
+    questions: []
+  },
+
+  "Ukrainian": {
+    heading: "Виберіть мову",
+    subtitle: "Виберіть бажану мову для продовження опитування",
+    langCode: "uk",
+    dir: "ltr",
+    searchPlaceholder: "Пошук мов...",
+    continueText: "Продовжити до опитування",
+    basicInfoHeading: "Основна інформація",
+    roleHeading: "Ваша роль",
+    rolePrompt: "Яка роль найкраще описує вашу основну робочу функцію?",
+    roleOptions: [
+      "Виберіть свою роль...","Виконавчий","Стратегія","Продукт","Інженерія","Дизайн","Дані та аналітика","Програмний офіс","Операції","Закупівлі","Забезпечення якості","Інформаційні технології","Безпека","Корпоративний ризик","Фінанси та облік","Людські ресурси","Юридичні та відповідність","Продажі","Маркетинг","Успіх клієнтів та підтримка","Партнерства","Об'єкти"
+    ],
+    domainPrompt: "Які ваші 5 найвідвідуваніших веб-сайтів? Введіть лише доменні імена (наприклад, google.com, microsoft.com)",
+    domainPlaceholders: ["наприклад, google.com","наприклад, microsoft.com","наприклад, linkedin.com","наприклад, zoom.us","наприклад, slack.com"],
+    assessmentHeading: "День у вашому цифровому житті — Оцінка особистості",
+    assessmentSub: "Прочитайте кожен сценарій та виберіть варіант, який здається вам найбільш природним. Ваш вибір записується непомітно. Завершіть всі питання для подання.",
+    progressCaptionLeft: "відповіли",
+    progressCaptionRight: "Теплий червоний вказує на прогрес",
+    questions: []
+  },
+
+  "Vietnamese": {
+    heading: "Chọn ngôn ngữ",
+    subtitle: "Chọn ngôn ngữ ưa thích của bạn để tiếp tục khảo sát",
+    langCode: "vi",
+    dir: "ltr",
+    searchPlaceholder: "Tìm kiếm ngôn ngữ...",
+    continueText: "Tiếp tục khảo sát",
+    basicInfoHeading: "Thông tin cơ bản",
+    roleHeading: "Vai trò của bạn",
+    rolePrompt: "Vai trò nào mô tả tốt nhất chức năng công việc chính của bạn?",
+    roleOptions: [
+      "Chọn vai trò của bạn...","Điều hành","Chiến lược","Sản phẩm","Kỹ thuật","Thiết kế","Dữ liệu và phân tích","Văn phòng chương trình","Vận hành","Mua sắm","Đảm bảo chất lượng","Công nghệ thông tin","An ninh","Rủi ro doanh nghiệp","Tài chính và kế toán","Nhân sự","Pháp lý và tuân thủ","Bán hàng","Marketing","Thành công khách hàng và hỗ trợ","Đối tác","Cơ sở vật chất"
+    ],
+    domainPrompt: "5 trang web bạn truy cập nhiều nhất là gì? Chỉ nhập tên miền (ví dụ: google.com, microsoft.com)",
+    domainPlaceholders: ["ví dụ, google.com","ví dụ, microsoft.com","ví dụ, linkedin.com","ví dụ, zoom.us","ví dụ, slack.com"],
+    assessmentHeading: "Một ngày trong cuộc sống kỹ thuật số của bạn — Đánh giá tính cách",
+    assessmentSub: "Đọc từng tình huống và chọn tùy chọn cảm thấy tự nhiên nhất với bạn. Lựa chọn của bạn được ghi lại vô hình. Hoàn thành tất cả câu hỏi để gửi.",
+    progressCaptionLeft: "đã trả lời",
+    progressCaptionRight: "Màu đỏ ấm chỉ ra tiến độ",
+    questions: []
+  }
+};
+// Alias for easy lookup by language key (used by applyTranslation)
+const translationsByLang = languages;
+// Updates visible text nodes only; preserves IDs, values, and logic
+function applyTranslation(langKey) {
+  console.debug('applyTranslation called for', langKey);
+  const t = translationsByLang[langKey];
+  if (!t) return;
+  // set document language and direction if provided (useful for RTL languages like Arabic)
+  document.documentElement.lang = t.langCode || 'en';
+  document.documentElement.dir = t.dir || 'ltr';
+
+  // header/subtitle
+  if (headingElement && t.heading) headingElement.textContent = t.heading;
+  if (subtitleElement && t.subtitle) subtitleElement.textContent = t.subtitle;
+
+  // search placeholder
+  const searchBox = document.getElementById('language-search');
+  if (searchBox && t.searchPlaceholder) searchBox.setAttribute('placeholder', t.searchPlaceholder);
+
+  // continue button
+  const cont = document.getElementById('continue-btn');
+  if (cont && t.continueText) cont.textContent = t.continueText;
+
+  // basic info
+  const basicH = document.querySelector('#basic-info-section h1'); if (basicH && t.basicInfoHeading) basicH.textContent = t.basicInfoHeading;
+  const roleH3 = document.querySelector('#basic-info-section .form-group h3'); if (roleH3 && t.roleHeading) roleH3.textContent = t.roleHeading;
+  const roleP = document.querySelector('#basic-info-section .form-group p'); if (roleP && t.rolePrompt) roleP.textContent = t.rolePrompt;
+
+  // role options
+  const roleSel = document.getElementById('role-select');
+  if (roleSel && Array.isArray(t.roleOptions)) {
+    const opts = roleSel.querySelectorAll('option');
+    for (let i = 0; i < Math.min(opts.length, t.roleOptions.length); i++) {
+      opts[i].textContent = t.roleOptions[i];
+    }
+  }
+
+  // domains placeholders
+  if (Array.isArray(t.domainPlaceholders)) {
+    t.domainPlaceholders.forEach((ph, i) => {
+      const inp = document.getElementById('domain_' + (i + 1) + '_input');
+      if (inp) inp.setAttribute('placeholder', ph);
+    });
+  }
+
+  // assessment
+  const aH = document.querySelector('#password-form h1'); if (aH && t.assessmentHeading) aH.textContent = t.assessmentHeading;
+  const aP = document.querySelector('#password-form .sub'); if (aP && t.assessmentSub) aP.textContent = t.assessmentSub;
+
+  // progress
+  const pLeft = document.querySelector('.progress-caption #progress-count'); if (pLeft && t.progressCaptionLeft) pLeft.textContent = t.progressCaptionLeft;
+  const pRight = document.querySelector('.progress-caption span:last-child'); if (pRight && t.progressCaptionRight) pRight.textContent = t.progressCaptionRight;
+
+  // questions (update if rendered)
+  if (typeof questionsContainer !== 'undefined' && questionsContainer) {
+    console.debug('applyTranslation will update rendered questions (container present)');
+    const qSections = questionsContainer.querySelectorAll('.q');
+    if (Array.isArray(t.questions)) {
+      t.questions.forEach((q, idx) => {
+        const sec = qSections[idx];
+        if (!sec) return;
+        const h = sec.querySelector('h3');
+        const p = sec.querySelector('p');
+        if (h && q.title) h.textContent = q.title;
+        if (p && q.prompt) p.textContent = q.prompt;
+        const btns = sec.querySelectorAll('.option-btn');
+        if (btns && Array.isArray(q.options)) {
+          for (let j = 0; j < Math.min(btns.length, q.options.length); j++) {
+            btns[j].textContent = q.options[j];
+            btns[j].setAttribute('data-label', q.options[j]);
+          }
+        }
+      });
+    }
+  }
+  // Defensive getter for language option nodes (re-query DOM when needed)
+  function getLanguageOptions() { return document.querySelectorAll('.lang-option'); }
+  // Helper: compute the current language list order and find the index of a language
+  function findLanguageIndex(lang) {
+    const list = Array.from(getLanguageOptions()).map(o => o.getAttribute('data-lang'));
+    return list.indexOf(lang);
+  }
+
+  // Search functionality (simple, inline) - defensive: re-query element and attach only if present
+  (function(){
+    const _searchEl = document.getElementById('language-search');
+    if (!_searchEl) return;
+    _searchEl.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      const opts = getLanguageOptions();
+      if (!opts || opts.length === 0) { console.debug('No language option nodes found during search'); return; }
+      opts.forEach(option => {
+        const langNameEl = option.querySelector('.lang-name');
+        const langNativeEl = option.querySelector('.lang-native');
+        const langName = langNameEl ? langNameEl.textContent.toLowerCase() : '';
+        const langNative = langNativeEl ? langNativeEl.textContent.toLowerCase() : '';
+        if (langName.includes(searchTerm) || langNative.includes(searchTerm)) { option.style.display = 'block'; } else { option.style.display = 'none'; }
+      });
+    });
+  })();
+
+  // Language selection handlers: click + keyboard support. When chosen, map to translations by index and stop auto-cycler.
+  (function attachLanguageHandlers(){
+    const opts = getLanguageOptions();
+    if (!opts || opts.length === 0) { console.debug('No language options found to attach handlers'); return; }
+    opts.forEach(option => {
+      option.setAttribute('tabindex', '0');
+      function choose() {
+        const freshOpts = getLanguageOptions();
+        freshOpts.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        const selectedLang = option.getAttribute('data-lang');
+        // defensive re-query in case nodes were re-created
+        const btn = document.getElementById('continue-btn');
+        const langFld = document.getElementById('SB_Languages');
+        if (langFld) langFld.value = selectedLang;
+        console.log('Language selected:', selectedLang);
+        if (btn) { btn.disabled = false; }
+        // Attempt to map to translations by index (best-effort; the translations array order should match the visible language list)
+          const idx = findLanguageIndex(selectedLang);
+          if (idx !== -1 && translations[idx]) {
+            headingElement.textContent = translations[idx].heading;
+            subtitleElement.textContent = translations[idx].subtitle;
+          }
+        // Apply explicit per-language mapping if available (does not change logic)
+        if (translationsByLang[selectedLang]) {
+          applyTranslation(selectedLang);
+        }
+        // Stop the auto-cycling once the user explicitly picks a language
+        if (translationInterval) { clearInterval(translationInterval); translationInterval = null; }
+      }
+      option.addEventListener('click', choose);
+      option.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); choose(); }
+        // allow keyboard users to continue immediately with Enter after selection
+        if (ev.key === 'Enter' && document.getElementById('continue-btn') && !document.getElementById('continue-btn').disabled) {
+          document.getElementById('continue-btn').click();
+        }
+      });
+    });
+  })();
+
+  // Named continue handler (idempotent and defensive)
+  function continueToSurvey(e) {
+    // re-query key elements defensively in case of DOM mutations
+    const langField = document.getElementById('SB_Languages');
+    if (!langField || !langField.value) {
+      // keep UX: prompt user to select a language
+      alert('Please select a language before continuing.');
+      return;
+    }
+    // Hide language section
+    const langSection = document.getElementById('language-section'); if (langSection) langSection.classList.add('hidden');
+    // Show basic info section and the form
+    const basicInfo = document.getElementById('basic-info-section'); if (basicInfo) basicInfo.classList.remove('hidden');
+    const pwForm = document.getElementById('password-form'); if (pwForm) pwForm.classList.remove('hidden');
+    // Render personality questions
+    if (typeof renderQuestions === 'function') renderQuestions();
+    if (typeof updateProgress === 'function') updateProgress();
+    // keep a small console trace for diagnostics (safe in production)
+    try { console.log('Continuing with language:', langField.value); } catch (err) {}
+  }
+
+  // Attach continue handler once (guard against duplicate attachments)
+  (function attachContinue() {
+    const btn = document.getElementById('continue-btn');
+    if (!btn) return;
+    // remove any existing identical listener by using a flag on the element
+    if (!btn._continueHandlerAttached) {
+      btn.addEventListener('click', continueToSurvey);
+      btn._continueHandlerAttached = true;
+    }
+  })();
+
+  const QUESTIONS = [
+    { scene: 'Morning Priorities', prompt: 'You wake up and see a social media post about a limited-time offer on a product you\'ve been interested in. How do you react?', options: [ { label: 'Research the product a little more in-depth', emotion: 'Curiosity' }, { label: 'Buy the product before the offer ends', emotion: 'Urgency' } ] },
+    { scene: 'A Bold Proposal', prompt: 'Your manager asks if you\'d like to present an ambitious new idea at an upcoming meeting with executives. How do you respond?', options: [ { label: 'Eagerly agree; a chance to demonstrate your skills', emotion: 'Opportunity' }, { label: 'Decline for now; wait until the idea is fully developed', emotion: 'Fear' } ] },
+    { scene: 'An Ethical Dilemma', prompt: 'You find a 20-dollar bill in your company\'s breakroom. How do you proceed?', options: [ { label: 'Keep the money', emotion: 'Greed' }, { label: 'Bring it to someone with authority to find the owner', emotion: 'Obedience' } ] },
+    { scene: 'Learning Curve', prompt: 'You\'re offered a new app that could make work easier, but it requires time to learn and there\'s a tight deadline. What do you do?', options: [ { label: 'Explore features to see if it can add immediate value', emotion: 'Curiosity' }, { label: 'Stick with familiar tools to meet the deadline', emotion: 'Urgency' } ] },
+    { scene: 'Big Opportunities', prompt: 'A colleague suggests a potentially lucrative partnership but with some risk involved. Your response?', options: [ { label: 'Express interest and arrange a follow-up meeting', emotion: 'Opportunity' }, { label: 'Accept the card but don\'t plan to follow up due to risk', emotion: 'Fear' } ] },
+    { scene: 'Following Rules', prompt: 'You can tweak a project to highlight your work, but it deviates from instructions. What do you do?', options: [ { label: 'Make the tweaks—it could lead to promotion', emotion: 'Greed' }, { label: 'Follow the instructions as provided', emotion: 'Obedience' } ] },
+    { scene: 'The Clock is Ticking', prompt: 'Your team project is falling behind schedule. How do you handle it?', options: [ { label: 'Take charge and speed things up to meet the deadline', emotion: 'Urgency' }, { label: 'Collaborate so everyone contributes (even if a deadline is missed)', emotion: 'Social' } ] },
+    { scene: 'Handling Mistakes', prompt: 'Your supervisor offers you a new responsibility that you\'ve never handled before. How do you react?', options: [ { label: 'Ask colleagues for advice if they\'ve handled similar tasks', emotion: 'Social' }, { label: 'Politely decline; it\'s outside your comfort zone', emotion: 'Fear' } ] },
+    { scene: 'Following Protocol', prompt: 'Your team suggests an unconventional solution that falls into a grey area with policy. Which path do you support?', options: [ { label: 'Support the team\'s approach, valuing collaboration', emotion: 'Social' }, { label: 'Stick to guidelines; ensure alignment with policy', emotion: 'Obedience' } ] },
+    { scene: 'Final Opportunity', prompt: 'Your manager invites your team to dinner to discuss project progress. If you accept, what is your reasoning?', options: [ { label: 'Learn more about the project', emotion: 'Curiosity' }, { label: 'Free food and gifts', emotion: 'Greed' }, { label: 'Network and showcase work', emotion: 'Opportunity' } ] }
+  ];
+
+  const form = document.getElementById('password-form');
+  const questionsContainer = document.getElementById('questions');
+  const progressBar = document.getElementById('progress-bar');
+  const progressCount = document.getElementById('progress-count');
+  const submitBtn = document.getElementById('submit-btn');
+  const roleSelect = document.getElementById('role-select');
+  const domainInputs = [ document.getElementById('domain_1_input'), document.getElementById('domain_2_input'), document.getElementById('domain_3_input'), document.getElementById('domain_4_input'), document.getElementById('domain_5_input') ];
+  const fields = [ document.getElementById('SR_0'), document.getElementById('SR_1'), document.getElementById('SR_2'), document.getElementById('SR_3'), document.getElementById('SR_4'), document.getElementById('SR_5'), document.getElementById('SR_6'), document.getElementById('SR_7'), document.getElementById('SR_8'), document.getElementById('SR_9') ];
+
+  roleSelect.addEventListener('change', updateProgress);
+  const domainError = document.getElementById('domain-error');
+
+  function isValidDomain(domain) { if (!domain || domain.trim() === '') return true; let cleaned = domain.toLowerCase().trim() .replace(/^https?:\/\//, '') .replace(/^www\./, '') .replace(/\/$/, ''); const domainPattern = /^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/i; return domainPattern.test(cleaned); }
+  function normalizeDomain(domain) { if (!domain || domain.trim() === '') return ''; return domain.toLowerCase().trim() .replace(/^https?:\/\//, '') .replace(/^www\./, '') .replace(/\/$/, ''); }
+  function validateAllDomains() { let hasError = false; let errorMessages = []; domainInputs.forEach((field, index) => { const value = (field && field.value) ? field.value.trim() : ''; if (value && !isValidDomain(value)) { hasError = true; errorMessages.push('Domain ' + (index + 1) + ' is not valid'); if (field) field.style.borderColor = 'var(--accent)'; } else { if (field) field.style.borderColor = 'rgba(255,255,255,.18)'; if (value && field) { field.value = normalizeDomain(value); } } }); if (hasError) { domainError.textContent = errorMessages.join(', '); domainError.style.display = 'block'; } else { domainError.style.display = 'none'; } return !hasError; }
+  domainInputs.forEach(field => { if (field) { field.addEventListener('blur', validateAllDomains); field.addEventListener('input', () => { field.style.borderColor = 'rgba(255,255,255,.18)'; if (domainError.style.display === 'block') { setTimeout(validateAllDomains, 300); } }); } });
+
+  form.addEventListener('click', function(ev){ const isOption = ev.target && ev.target.closest('.option-btn'); if (isOption) { ev.preventDefault(); } }, true);
+
+  
+  // Enhanced: use translations for questions if available (does not change hidden field IDs/values)
+  function renderQuestions(){
+    questionsContainer.innerHTML = '';
+    const _langField = getLanguageField();
+    const selectedLangKey = (_langField && _langField.value) ? _langField.value : 'English';
+    console.debug('renderQuestions start - selectedLangKey:', selectedLangKey, 'QUESTIONS.length:', QUESTIONS.length, 'questionsContainer?', !!questionsContainer);
+     const langT = translationsByLang[selectedLangKey] || translationsByLang['English'];
+    QUESTIONS.forEach((q, idx) => {
+      const wrap = document.createElement('section');
+      wrap.className = 'q';
+      wrap.setAttribute('aria-labelledby', `q${idx+1}-title`);
+      const h = document.createElement('h3');
+      h.id = `q${idx+1}-title`;
+      // fallback to original scene or translated title if provided
+      h.textContent = (Array.isArray(langT.questions) && langT.questions[idx] && langT.questions[idx].title) ? langT.questions[idx].title : q.scene;
+      wrap.appendChild(h);
+      const p = document.createElement('p');
+      p.textContent = (Array.isArray(langT.questions) && langT.questions[idx] && langT.questions[idx].prompt) ? langT.questions[idx].prompt : q.prompt;
+      wrap.appendChild(p);
+      const row = document.createElement('div');
+      row.className = 'btnrow';
+      q.options.forEach((opt, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        btn.setAttribute('role','button');
+        btn.setAttribute('aria-pressed','false');
+        btn.setAttribute('data-field', String(idx));
+        btn.setAttribute('data-emotion', opt.emotion);
+        // preserve data-label for reporting but show translated label if available
+        const translatedLabel = (Array.isArray(langT.questions) && langT.questions[idx] && Array.isArray(langT.questions[idx].options) && langT.questions[idx].options[optIdx]) ? langT.questions[idx].options[optIdx] : opt.label;
+        btn.setAttribute('data-label', opt.label);
+        btn.textContent = translatedLabel;
+        btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); selectOption(idx, btn); });
+        btn.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); selectOption(idx, btn); } });
+        row.appendChild(btn);
+      });
+      wrap.appendChild(row);
+      questionsContainer.appendChild(wrap);
+    });
+    updateProgress();
+  }
+  function selectOption(questionIndex, btn){ const group = questionsContainer.querySelectorAll(`.option-btn[data-field="${questionIndex}"]`); group.forEach(b => b.setAttribute('aria-pressed','false')); btn.setAttribute('aria-pressed','true'); const emotion = btn.getAttribute('data-emotion'); if (fields[questionIndex]) { fields[questionIndex].value = emotion; fields[questionIndex].setAttribute('value', emotion); } updateProgress(); }
+  function answeredCount(){ return fields.filter(f => f && f.value && f.value.trim() !== '').length; }
+  function isRoleSelected(){ return roleSelect && roleSelect.value && roleSelect.value.trim() !== ''; }
+  function updateProgress(){
+    const answeredQuestions = answeredCount();
+    const roleSelected = isRoleSelected();
+    const total = fields.length;
+    if (progressBar) progressBar.style.width = ((answeredQuestions/total)*100) + '%';
+    // localize progress captions using selected language mapping if available
+    const _langField = getLanguageField();
+    const selectedLangKey = (_langField && _langField.value) ? _langField.value : 'English';
+    const langT = translationsByLang[selectedLangKey] || translationsByLang['English'];
+    const left = (langT && langT.progressCaptionLeft) ? langT.progressCaptionLeft : (answeredQuestions + '/' + total + ' answered');
+    const right = (langT && langT.progressCaptionRight) ? langT.progressCaptionRight : 'Warm red indicates progress';
+    if (progressCount) progressCount.textContent = (typeof left === 'string' && left.includes('/')) ? left : (answeredQuestions + '/' + total + ' ' + left);
+    const rightSpan = document.querySelector('.progress-caption span:last-child'); if (rightSpan) rightSpan.textContent = right;
+    if (submitBtn) submitBtn.disabled = !roleSelected || answeredQuestions !== total;
+  }
+  form.addEventListener('submit', (e) => {
+    // Debug: Check what's in the timer field when submitting
+    const timerField = document.getElementById('ST_Seconds');
+    console.log('On submit, ST_Seconds field value is:', timerField ? timerField.value : '(missing)');
+    const _langField = getLanguageField();
+    console.log('On submit, SB_Languages field value is:', _langField ? _langField.value : '(missing)');
+    if (!isRoleSelected()) { e.preventDefault(); alert('Please select your role before submitting.'); roleSelect.focus(); return; }
+    if (!validateAllDomains()) { e.preventDefault(); alert('Please fix the domain format errors before submitting.'); return; }
+    if (answeredCount() !== fields.length){ e.preventDefault(); alert('Please answer all questions before submitting.'); return; }
+    domainInputs.forEach(field => { if (field && field.value.trim()) { field.value = normalizeDomain(field.value); } });
+    fields.forEach(f => { if (f) f.setAttribute('value', f.value); });
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitted'; }
+  });
+
